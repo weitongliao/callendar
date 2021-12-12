@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background">
 
+    <com.survivor.calendar.TopView
+        android:id="@+id/top_view_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ListView
         android:id="@+id/lv"
         android:layout_width="fill_parent"

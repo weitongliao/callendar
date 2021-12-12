@@ -8,12 +8,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/ItemImage"
         />
+
     <TextView
         android:id="@+id/ItemTitle"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:textSize="20sp"
-        />
+        android:layout_height="wrap_content"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/ItemText"
