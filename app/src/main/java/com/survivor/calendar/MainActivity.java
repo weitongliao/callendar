@@ -88,6 +88,13 @@ public class MainActivity extends BaseActivity implements CalendarView.OnCalenda
                 mTextLunar.setVisibility(View.GONE);
                 mTextYear.setVisibility(View.GONE);
                 mTextMonthDay.setText(String.valueOf(mYear));
+
+//                FloatingActionButton fb = findViewById(R.id.floatingActionButton1);
+//                fb.setVisibility(View.GONE);
+//                FloatingActionButton fb2 = findViewById(R.id.floatingActionButton2);
+//                fb2.setVisibility(View.GONE);
+//                FloatingActionButton fb3 = findViewById(R.id.floatingActionButton3);
+//                fb3.setVisibility(View.GONE);
             }
         });
         findViewById(R.id.fl_current).setOnClickListener(new View.OnClickListener() {
@@ -140,7 +147,6 @@ public class MainActivity extends BaseActivity implements CalendarView.OnCalenda
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("aa", "aa");
                 Intent intent = new Intent(MainActivity.this, UserActivity.class);
 
                 startActivityForResult(intent,1);
@@ -197,15 +203,19 @@ public class MainActivity extends BaseActivity implements CalendarView.OnCalenda
             String event_year = cursor.getString(3);
             String event_month = cursor.getString(4);
             String event_day = cursor.getString(5);
+            Log.e("day", event_day);
+            Log.e("day", String.valueOf(Integer.parseInt(event_day)));
             String event_color = cursor.getString(8);
             int value = new BigInteger(event_color, 16).intValue();
             if(map.containsKey(event_year + event_month + event_day)) {
                 map.get(event_year + event_month + event_day).addScheme(value, "ok");
             }else {
-                map.put(event_year + event_month + event_day,
+                map.put(event_year + "" + (Integer.parseInt(event_month) < 10 ? "0" + event_month : event_month) + "" + (Integer.parseInt(event_day) < 10 ? "0" + event_day : event_day),
                         getSchemeCalendar(Integer.parseInt(event_year), Integer.parseInt(event_month), Integer.parseInt(event_day), value, name)); //0xFF13acf0
+//                Log.e("date", event_year + event_month + event_day);
             }
         }
+
         mCalendarView.setSchemeDate(map);
     }
 

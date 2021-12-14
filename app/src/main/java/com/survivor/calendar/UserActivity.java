@@ -86,6 +86,8 @@ public class UserActivity extends Activity {
 //                        toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
 //                        Log.e("a", Integer.toHexString(selectedColor) + "");
                         color = Integer.toHexString(selectedColor);
+                        Button color_button = findViewById(R.id.color_set);
+                        color_button.setTextColor(selectedColor);
                     }
                 })
                 .setPositiveButton("ok", new ColorPickerClickListener() {

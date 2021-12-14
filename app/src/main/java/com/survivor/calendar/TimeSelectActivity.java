@@ -118,6 +118,7 @@ public class TimeSelectActivity extends Activity {
                         year = cal.get(Calendar.YEAR);
                         month = cal.get(Calendar.MONTH) + 1;
                         day = cal.get(Calendar.DAY_OF_MONTH);
+//                        Log.e("day", String.valueOf(day));
                     }
                 })
                         .setLabel("年","月","日","时","分","秒")

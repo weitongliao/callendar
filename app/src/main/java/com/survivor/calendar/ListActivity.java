@@ -84,8 +84,14 @@ public class ListActivity extends Activity {
             if (status.equals("private") && !user.equals(name)){
                 title = "[Private Issue]";
             }
-            map.put("ItemTitle", name + ": " + title + color);
+            if (status.equals("private")){
+                map.put("ItemImage", R.drawable.i);
+            }else{
+                map.put("ItemImage", R.drawable.r);
+            }
+            map.put("ItemTitle", name + ": " + title);
             map.put("ItemText", year + "-" + month + "-" + day + " " + hour + ":" + minute);
+
             listItem.add(map);
         }
         dbManager.close();
