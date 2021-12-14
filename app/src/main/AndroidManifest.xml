@@ -38,6 +38,7 @@
 <!--        <activity android:name=".full.FullActivity" />-->
         <activity android:name=".ListActivity" />
         <activity android:name=".TimeSelectActivity" />
+        <activity android:name=".UserActivity" />
 <!--        <activity android:name=".TestActivity" />-->
 <!--        <activity android:name=".CalendarActivity" />-->
     </application>

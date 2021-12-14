@@ -153,6 +153,16 @@
                 android:clickable="true"
                 app:srcCompat="@mipmap/ic_more" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton3"
+                android:layout_width="176dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|clip_vertical|center"
+                android:layout_margin="20dp"
+                android:clickable="true"
+                android:visibility="visible"
+                app:srcCompat="@mipmap/ic_solar_system" />
+
 
         </com.survivor.calendarview.CalendarView>
     </com.survivor.calendarview.CalendarLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/cardview_light_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.survivor.calendar.TopView
+        android:id="@+id/top_view_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+        android:id="@+id/text_field_boxes_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:labelText="User Name"
+        app:hasClearButton="true"
+        app:panelBackgroundColor="#ffe8e8"
+        >
+
+        <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+            android:id="@+id/extended_edit_text_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8a8c8e"
+            />
+
+    </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+    <Button
+        android:id="@+id/color_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Color" />
+
+    <Button
+        android:id="@+id/button_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finish" />
+
+</LinearLayout>

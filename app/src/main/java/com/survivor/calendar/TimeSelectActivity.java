@@ -3,11 +3,14 @@ package com.survivor.calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -37,6 +40,9 @@ public class TimeSelectActivity extends Activity {
     private int day;
     private int hour;
     private int minute;
+    private String color;
+    private String status = "private";
+    private String user = "default";
 
     Date date = new Date();
     SimpleDateFormat dateFormat1= new SimpleDateFormat("yyyy-MM-dd");
@@ -45,6 +51,18 @@ public class TimeSelectActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        user = intent.getExtras().getString("user");
+        color = intent.getExtras().getString("color");
+
+        Calendar now = Calendar.getInstance();
+        year = now.get(Calendar.YEAR);
+        month = now.get(Calendar.MONTH) + 1;
+        day = now.get(Calendar.DAY_OF_MONTH);
+        hour = now.get(Calendar.HOUR_OF_DAY);
+        minute = now.get(Calendar.MINUTE);
+
         setContentView(R.layout.activity_timeselect);
 
         setTitle();
@@ -139,11 +157,28 @@ public class TimeSelectActivity extends Activity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbManager = new DBManager(TimeSelectActivity.this);
-                dbManager.open();
-                dbManager.insert(new Event("a", eventText, year, month, day, hour, minute));
-                dbManager.close();
-                finish();
+                if (eventText.equals("")){
+                    Toast.makeText(TimeSelectActivity.this, "Enter Your Time Please", Toast.LENGTH_SHORT).show();
+                }else {
+                    dbManager = new DBManager(TimeSelectActivity.this);
+                    dbManager.open();
+                    dbManager.insert(new Event(user, eventText, year, month, day, hour, minute, color, status));
+                    dbManager.close();
+                    finish();
+                }
+            }
+        });
+
+        //switch button
+        Switch sb = findViewById(R.id.switch1);
+        sb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    status = "public";
+                }else {
+                    status = "private";
+                }
             }
         });
     }

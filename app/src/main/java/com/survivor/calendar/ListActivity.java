@@ -3,6 +3,7 @@ package com.survivor.calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,6 +31,11 @@ public class ListActivity extends Activity {
     ArrayList<String> list = new ArrayList<>();
     ArrayList<Event> events = new ArrayList<>();
 
+    String this_year;
+    String this_month;
+    String this_day;
+    String user = "default";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +44,25 @@ public class ListActivity extends Activity {
 
         setTitle();
 
-        list = new ArrayList<>();
+        Intent intent = getIntent();
+        this_year = intent.getExtras().getString("year");
+        this_month = intent.getExtras().getString("month");
+        this_day = intent.getExtras().getString("day");
+        user = intent.getExtras().getString("user");
 
+        setLv();
+    }
+
+    private void setLv(){
+        list = new ArrayList<>();
         lv = (ListView) findViewById(R.id.lv);
         /*定义一个动态数组*/
         ArrayList<HashMap<String, Object>> listItem = new ArrayList<HashMap<String,     Object>>();
         /*在数组中存放数据*/
         dbManager = new DBManager(ListActivity.this);
         dbManager.open();
-        Cursor cursor = dbManager.fetch();
+//        Cursor cursor = dbManager.fetch();
+        Cursor cursor = dbManager.findByDay(this_year, this_month, this_day);
         while (cursor.moveToNext()){
             cursor.getString(2);
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -57,13 +74,21 @@ public class ListActivity extends Activity {
             String day = cursor.getString(5);
             String hour = cursor.getString(6);
             String minute = cursor.getString(7);
+            String color = cursor.getString(8);
+            String status = cursor.getString(9);
+
+//            int value = new BigInteger(color, 16).intValue();
+
             events.add(new Event(name, title, Integer.parseInt(year), Integer.parseInt(month),
-                    Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute)));
-            map.put("ItemText", name + " " + title + " " + year + "-" + month + "-" + day + " " + hour + ":" + minute);
+                    Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute), color, status));
+            if (status.equals("private") && !user.equals(name)){
+                title = "[Private Issue]";
+            }
+            map.put("ItemTitle", name + ": " + title + color);
+            map.put("ItemText", year + "-" + month + "-" + day + " " + hour + ":" + minute);
             listItem.add(map);
         }
         dbManager.close();
-
         SimpleAdapter mSimpleAdapter = new SimpleAdapter(this,listItem,//需要绑定的数据
                 R.layout.item,//每一行的布局
                 //动态数组中的数据源的键对应到定义布局的View中
@@ -106,6 +131,7 @@ public class ListActivity extends Activity {
                 dbManager = new DBManager(ListActivity.this);
                 dbManager.open();
                 dbManager.delete(Long.parseLong(list.get(index)));
+                setLv();
             }
         });
 
